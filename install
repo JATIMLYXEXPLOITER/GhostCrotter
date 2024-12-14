@@ -1,0 +1,46 @@
+#!/bin/bash
+
+clear
+echo "start checking modules and installing modules"
+echo ""
+echo ""
+echo "--------------------------------------> checking python3"
+if ! command -v python3 &>/dev/null; then
+    echo "python3 not found, starting to install python3."
+    apt update && apt install python3 -y
+fi
+echo "--------------------------------------> checking pip"
+if ! command -v pip &>/dev/null; then
+    echo "pip not found, starting to install pip"
+    apt install python3-pip -y
+fi
+
+modules=(
+    argparse
+    requests
+    re
+    os
+    json
+    urllib3
+    logging
+    time
+    threading
+    random
+    colorama
+    socket
+    bs4
+    fake_useragent
+)
+
+echo "--------------------------------------> checking python module"
+for module in "${modules[@]}"; do
+    python3 -c "import $module" &>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "installing module $module..."
+        pip install "$module"
+    else
+        echo "$module has been installed"
+    fi
+done
+
+echo "all module has been downloaded and tools ready to use"
