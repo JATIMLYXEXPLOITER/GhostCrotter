@@ -286,7 +286,7 @@ def sensitivedircheck(url):
             response = requests.request(vuln["method"], url + vuln["path"], headers={"User-Agent": ua.random})
             if response.status_code == 200:
                 print(f"[+] Sensitive directory found: {url + vuln['path']}")
-            elif response.status_code == 403 or response.status_code == 404:
+            elif response.status_code == 403:
                 print(f"[!] Sensitive dir access forbidden: {url + vuln['path']}")
         except requests.RequestException as e:
             print(f"[-] Error checking sensitive dir: {url + vuln['path']} - {e}")
