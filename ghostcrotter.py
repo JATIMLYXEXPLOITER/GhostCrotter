@@ -1981,9 +1981,14 @@ def crawler(url, ssl_verify):
     queue.put((url, 0))
     max_depth = 3
 
+    # Parse the domain of the root URL
+    root_domain = urlparse(url).netloc
+
     def is_valid_url(url):
         parsed = urlparse(url)
-        return bool(parsed.netloc) and bool(parsed.scheme)
+        # Only allow URLs within the same domain and proper schemes
+        return (parsed.netloc.endswith(root_domain) and 
+                parsed.scheme in ["http", "https"])
 
     def fetch_page(url):
         try:
@@ -2033,6 +2038,7 @@ def crawler(url, ssl_verify):
 
     log_message("Web crawler completed.")
     return results
+                        
     
 def hard_scan(url, ssl_verify, output):
     log_message(f"Starting scan for {url}")
