@@ -289,7 +289,7 @@ def sensitivedircheck(url):
             elif response.status_code == 403:
                 print(f"[!] Sensitive dir access forbidden: {url + vuln['path']}")
         except requests.RequestException as e:
-            print(f"[-] Error checking sensitive dir: {url + vuln['path']} - {e}")
+            print(f"[-] Error checking sensitive dir: {url + vuln['path']}")
             
 def find_parameters(url, ssl_verify=True):
     try:
